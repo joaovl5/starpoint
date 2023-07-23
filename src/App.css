@@ -1,0 +1,324 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
+/* fixes */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+input {
+  font-size: inherit;
+}
+
+:root {
+  --item-size: 60px;
+  --listItem-gap: 0.6em;
+  --floatBtn-padding: -1.8em;
+}
+
+@keyframes opacityTransition {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #111;
+  color: rgb(231, 231, 231);
+}
+
+/* UTILITY CLASSES */
+
+.modal {
+  display: block;
+  opacity: 1;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: #11111179;
+  animation: opacityTransition 0.1s ease-in;
+}
+
+.modalContent {
+  background-color: #000000;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 2px solid #63636373;
+  border-radius: 1em;
+  width: max(40%, 400px); /* Could be more or less, depending on screen size */
+  z-index: 2;
+}
+
+.tooltip {
+  visibility: hidden;
+  opacity: 0;
+  width: max-content;
+  font-size: 0.65rem;
+  padding: 0.3em;
+
+  background-color: rgba(0, 0, 0, 0.274);
+  color: #eeeeee;
+  text-align: center;
+  border-radius: 5px;
+  position: absolute;
+
+  /* left: 0;
+  right: 0; */
+
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -2em;
+
+  z-index: 1;
+}
+
+.floatPanel {
+  /* visibility: visible;
+  opacity: 0; */
+  display: grid;
+  gap: 0.3em 0;
+}
+
+.sideButton {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.itemWrap .itemButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  padding: 0.05em;
+
+  background-color: rgba(0, 0, 0, 0.966);
+  opacity: 1;
+}
+
+.floatButton {
+  /* display */
+
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 1rem;
+  padding: 0.1em;
+
+  /* visual */
+  color: rgb(255, 255, 255);
+  background: rgb(22, 22, 22);
+  border: 1px solid rgba(255, 255, 255, 0.486);
+  border-radius: 0.35em;
+  transition: all 0.2s ease-in-out;
+}
+
+.floatButton:hover,
+.floatButton:active {
+  padding: 0.15em;
+}
+
+.floatButton:hover {
+  background-color: rgb(73, 73, 73);
+}
+
+.floatButton:active {
+  background-color: rgb(112, 112, 112);
+}
+
+.centered {
+  text-align: center;
+}
+
+/* FORM CLASSES */
+.modalForm {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+  flex-direction: column;
+  overflow: none;
+  margin-top: 0.3em;
+}
+
+input {
+  padding: 0.3em;
+  width: 100%;
+
+  background: black;
+  color: white;
+  border: 1px solid gray;
+  border-radius: 0.3em;
+}
+
+input[type="submit"] {
+  font-weight: 600;
+  width: 100px;
+}
+
+input[type="text"] {
+  outline: 1px solid rgba(255, 255, 255, 0);
+  transition: all 0.2s ease-in;
+}
+
+input[type="text"]:focus {
+  outline-color: white;
+}
+
+/* MAIN LINK CLASSES */
+
+.listContainer {
+  display: grid;
+  width: 100%;
+  grid-auto-flow: column;
+  grid-auto-columns: repeat(auto-fit, minmax(400px, 30%));
+  justify-content: start;
+}
+
+.listGhost {
+  width: fit-content;
+  padding-right: 2em;
+}
+
+.listWrap {
+  position: relative;
+
+  border: 2px solid rgba(128, 128, 128, 0.418);
+  background-color: rgba(0, 0, 0, 0.541);
+  border-radius: 0.9em;
+  width: fit-content;
+}
+
+.listWrap .floatPanel {
+  position: absolute;
+  right: var(--floatBtn-padding);
+}
+
+.listEdit {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  animation: opacityTransition 1s ease-in;
+}
+
+.editItem {
+  border-bottom: 1px solid grey;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.2em;
+  background-color: rgb(0, 0, 0);
+  transition: all 0.1s ease-in;
+}
+
+.editHighlight {
+  transform: rotate(10deg);
+  /*  */
+}
+
+.listItem {
+  --columns: 4;
+
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-columns: repeat(var(--columns), var(--item-size));
+  justify-content: start;
+  width: fit-content;
+  position: relative;
+
+  padding: var(--listItem-gap);
+  gap: var(--listItem-gap);
+
+  transition: all 0.2s ease-in-out;
+}
+
+.listItem:hover {
+  background-color: rgba(0, 0, 0, 0.233);
+}
+
+.itemWrap {
+  position: relative;
+  overflow: visible;
+
+  font-weight: bold;
+
+  transition: all 0.1s ease-in;
+}
+
+.item {
+  /* sizing/display props */
+  width: var(--item-size);
+  height: var(--item-size);
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  /* visual props */
+  background-color: rgba(255, 255, 255, 0.185);
+  border: 2px solid rgba(128, 128, 128, 0.281);
+  border-radius: 1em;
+
+  cursor: pointer;
+
+  /* transitions */
+  transition: all 0.2s ease-in-out;
+}
+
+.item.editMode {
+  background-color: rgba(255, 255, 255, 0.082);
+  border: 3px solid rgb(75, 75, 75);
+  opacity: 0.6;
+}
+
+.item:hover {
+  opacity: 0.8;
+  transform: scale(1.1);
+  border-width: 3px;
+}
+
+.item.editMode:hover {
+  opacity: 0.6;
+  transform: scale(1);
+}
+
+.item .iconAnchor {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  height: fit-content;
+
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.item .iconAnchor img {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  height: auto;
+}
+
+.tooltip-item {
+  justify-self: start;
+  text-align: center;
+  font-size: 0.8em;
+  margin: 0;
+  z-index: 2;
+}
+
+.tooltip a {
+  text-decoration: none;
+  color: white;
+}
